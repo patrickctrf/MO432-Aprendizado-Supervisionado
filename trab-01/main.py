@@ -19,23 +19,23 @@ if __name__ == '__main__':
     # OneHot encoding para converter vriaveis ctegoricas em dummy variables.
     data = get_dummies(data)
 
+    # ============ITEM-2========================================================
+    scaler = StandardScaler()
+    scaler.fit(data)
+
+    print("Médias do Scaler em cada coluna: ", scaler.mean_)
+    print('Dados centrados e "escalados": ', scaler.transform(data))
+
+    data_scaled = scaler.transform(data)
+
+    # ============ITEM-3========================================================
     # Separamos dados de entrada dos dados de saida.
     # A coluna a remover ("i") eh a do selling_price.
     i = 1
-    X_data = hstack((data.to_numpy()[:, 0:i], data.to_numpy()[:, i + 1:]))
+    X_data_scaled = hstack((data_scaled[:, 0:i], data_scaled[:, i + 1:]))
     # X_data = X_data.T
-    y_data = data.to_numpy()[:, i]
+    y_data = data_scaled[:, i]
 
-    # ============ITEM-2========================================================
-    scaler = StandardScaler()
-    scaler.fit(X_data)
-
-    print("Médias do Scaler em cada coluna: ", scaler.mean_)
-    print('Dados centrados e "escalados": ', scaler.transform(X_data))
-
-    X_data_scaled = scaler.transform(X_data)
-
-    # ============ITEM-3========================================================
     pca = PCA(n_components=0.9, svd_solver="full")
     pca.fit(X_data_scaled)
 
