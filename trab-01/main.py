@@ -30,8 +30,8 @@ if __name__ == '__main__':
     scaler = StandardScaler()
     scaler.fit(X_data)
 
-    print("Médias do Scaler em cada coluna: ", scaler.mean_)
-    print('Dados centrados e "escalados": ', scaler.transform(X_data))
+    print("\nMédias do Scaler em cada coluna: \n", scaler.mean_)
+    print('nDados centrados e "escalados": \n', scaler.transform(X_data))
 
     X_data_scaled = scaler.transform(X_data)
 
