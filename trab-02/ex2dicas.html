@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0065)https://www.ic.unicamp.br/~wainer/cursos/1s2020/432/ex2dicas.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><style type="text/css" id="dark-mode-custom-style"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ex2dicas.html</title>
+
+
+</head>
+
+<body data-gr-c-s-loaded="true">
+
+<h1 id="exercício-2---dicas">Exercício 2 - Dicas</h1>
+<p>Curiosamente na minha solução a regressão linear é o melhor regressor. Isso não é o caso mais frequente - de forma geral a regressão linear não é uma boa alternativa.</p>
+<p>Para fazer a busca aleatoria, considere usar o <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html">RandomizedSearchCV</a> Neste caso voce precisa especificar a distribuição de probabilidade dos hiperametros</p>
+<ul>
+<li><code>uniform</code> é a distribuição uniforme (números reais)</li>
+<li><code>randint</code> é a distribuição uniforme para números inteiros (como o numero de arvores no RF e GBM)</li>
+<li><code>loguniform</code> é a distribuição onde o expoente é uniforme (como no C e <span class="math inline"><em>γ</em></span> no SVM)</li>
+<li>as distribuições são do <a href="https://docs.scipy.org/doc/scipy/reference/stats.html" class="uri">https://docs.scipy.org/doc/scipy/reference/stats.html</a></li>
+<li>listar valores é o equivalente a dar probabilidade igual acada um dos valores, como no caso do epsilon no SVM</li>
+</ul>
+<p>Para os que casos onde voce tem que tentar todas as combinações, pense no <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV">GridSearchCV</a></p>
+<p>Essas duas funçoes de busca de hiperparametro precisam que voce passe varias coisas (a validacaó cruzada, e a funçao de avaliação) e elas retornam varias coisas inclusive o melhor resultado. A funçao de scoring esta descrita em <a href="https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter" class="uri">https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter</a> e me parece que a que devemos usar é a <code>neg_root_mean_squared_error</code> - Note que ela retorna o negativo do RMSE ja que essas funçoes buscam a solução com maior valor (por exemplo acuracia - quanto maior melhor) e para o RMSE quanto MENOR melhor. Dai o negativo.</p>
+<p>mas vale a pena fazer pelo menos 1 ou 2 testes onde voce escreve o codigo inteiro, por explicito.</p>
+<p>Os testes no RF, e SVM com kernel RBF demoraram varios minutos no meu caso, os outros são mais rápidos.</p>
+<p>O MLP nao converge (no meu caso) mesmo com 400 interações (o default é 200 interações) Mesmo sem convergir o algoritmo da uma resposta que nao é maluca.</p>
+<!-- Local Variables: -->
+<!-- language: pt_BR -->
+<!-- End: -->
+
+
+
+<style>.lXvAzWdsJAPzcLK { color:#00acdb !important; } 
+.lXvAzWdsJAPzcLK.ba-outline { outline-color:#00acdb } 
+.lXvAzWdsJAPzcLK.TnX3i6iwXH3bP:hover, .lXvAzWdsJAPzcLK.TnX3i6iwXH3bP.active { color:#0098c2 !important; }
+.xlda2n556Y0tRVQ { background-color:#00acdb !important; }
+.xlda2n556Y0tRVQ.TnX3i6iwXH3bP:hover, .xlda2n556Y0tRVQ.TnX3i6iwXH3bP.active { background:#0098c2 !important; }
+.ba-border-primary { border-color:#0098c2 !important }
+.M8DlQkZu5Ur { background:#f6a800 !important; color:white !important; }
+.M8DlQkZu5Ur.TnX3i6iwXH3bP:hover, .M8DlQkZu5Ur.TnX3i6iwXH3bP.active { background:#ab7500 !important; }
+.ba-color-secondary { color:#f6a800 !important;  }
+.ba-color-secondary.TnX3i6iwXH3bP:hover, .ba-color-secondary.TnX3i6iwXH3bP.active { color:#ab7500 !important; }
+.ba-color-tertiary { color:#f6a800 !important }
+.ba-color-tertiary.TnX3i6iwXH3bP:hover, .ba-color-tertiary.TnX3i6iwXH3bP.active { color:#ab7500 !important }
+.I0vIidgjrjVdupMy { background:#f6a800 !important }
+.ba-bg-tertiary.TnX3i6iwXH3bP:hover, .ba-bg-tertiary.TnX3i6iwXH3bP.active { background:#ab7500 !important }</style></body><evlist></evlist></html>
