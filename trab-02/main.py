@@ -81,7 +81,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -184,7 +184,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -226,7 +226,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -254,7 +254,7 @@ if __name__ == '__main__':
     np.random.seed(1234)
 
     # Gera os parametros de entrada aleatoriamente.
-    n_neighbors = np.random.uniform(1, 1000, 10)
+    n_neighbors = np.random.uniform(1, 1000, 10).astype("int32")
 
     # Une os parametros de entrada em um unico dicionario a ser passado para a
     # funcao.
@@ -265,7 +265,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -304,7 +304,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -343,7 +343,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -382,9 +382,9 @@ if __name__ == '__main__':
     regressor = RandomForestRegressor()
     cv_results = \
         GridSearchCV(estimator=regressor, cv=shuffle_splitter,
-                     param_distributions=parametros,
-                     verbose=2,
-                     n_jobs=4,
+                     param_grid=parametros,
+                     verbose=1,
+                     n_jobs=1,
                      scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
     # Realizamos a busca atraves do treinamento
@@ -411,7 +411,7 @@ if __name__ == '__main__':
     np.random.seed(1234)
 
     # Gera os parametros de entrada aleatoriamente.
-    n_estimators = np.random.uniform(5, 100, 10)
+    n_estimators = np.random.uniform(5, 100, 10).astype("int32")
     learning_rate = [0.01, 0.3]
     max_depth = [2, 3]
 
@@ -424,7 +424,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=2,
+                           verbose=1,
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
