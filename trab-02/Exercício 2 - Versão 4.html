@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)https://www.ic.unicamp.br/~wainer/cursos/1s2020/432/exercicio2.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><style type="text/css" id="dark-mode-custom-style"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="Jacques Wainer">
+  <title>Exercício 2 - Versão 4</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="./Exercício 2 - Versão 4_files/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="./Exercício 2 - Versão 4_files/katex.min.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head><evlist></evlist>
+<body data-gr-c-s-loaded="true">
+<header id="title-block-header">
+<h1 class="title"><p>Exercício 2 - Versão 4</p></h1>
+<p class="author">Jacques Wainer</p>
+</header>
+<h1 id="exercício-2---versão-4">Exercício 2 - Versão 4</h1>
+<p>Data de entrega: 12/7 a meia noite, via email.</p>
+<p>Objetivos: aplicar os vários regressores visto em aula. Busca de hiperparametros</p>
+<h2 id="leia">Leia</h2>
+<p>Leia o arquivo <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00514/Bias_correction_ucl.csv">Bias_correction_ucl.csv</a>. A derscriçao dos dados esta <a href="https://archive.ics.uci.edu/ml/datasets/Bias+correction+of+numerical+prediction+model+temperature+forecast">aqui</a></p>
+<ul>
+<li><p><strong>NOVO</strong> remova a coluna <strong>Date</strong></p></li>
+<li><p>remova a coluna <strong>Next_Tmin</strong> (coluna 25). O objetivo original dos dados é prever tanto Next_Tmin quanto Next_tmax. Mas nos so vamos usar o Next_Tmax. Mas não queremos que o valor do Next_Tmin influencie nessa previsão.</p></li>
+<li><p>remova as linhas que tem valor faltante. Das 7752 linhas originais sobram 7588</p></li>
+</ul>
+<p>O atributo de saída é <strong>Next_Tmax</strong> (a temperatura máxima no próximo dia).</p>
+<h1 id="cross-validation-medida-de-erro-e-busca-de-hiperparametros">Cross validation, medida de erro e busca de hiperparametros</h1>
+<p>Use 5-fold cross validation.</p>
+<p>Use RMSE como medida de erro</p>
+<p>A busca de hiperparametros será aleatória. O problema especificará um intervalo para hiperparametro. Use uma distribuição uniforme para escolher valores neste intervalo.</p>
+<p>Se houver mais de um hiperparametro,</p>
+<h1 id="para-cada-um-dos-regressores-abaixo">Para cada um dos regressores abaixo</h1>
+<p>Reporte o RMSE da melhor combinação de hiperparametros e o valor dos hiperparametros encontrados</p>
+<p>Também reporte o RMSE de usar os valores default do SKLearn para os hiperparametros que voce buscou.</p>
+<h3 id="linear">Linear</h3>
+<p>Não tem hiperparametro</p>
+<h3 id="linear-com-regularização-l2">Linear com regularização L2</h3>
+<p>alpha: 10 números aleatórios entre <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup><mi>e</mi><mn>1</mn><msup><mn>0</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">10^{-3} e 10^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.814108em; vertical-align: 0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">e</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span>: Uniforme no expoente,</p>
+<h3 id="linear-com-regularização-l1">Linear com regularização L1</h3>
+<p>alpha: 10 números aleatório entre <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup><mi>e</mi><mn>1</mn><msup><mn>0</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">10^{-3} e 10^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.814108em; vertical-align: 0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">e</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span>: Uniforme no expoente,</p>
+<h3 id="svm-linear">SVM Linear</h3>
+<p>Selecione 10 pares aleatórios ente:</p>
+<ul>
+<li><p>Use epsilon = 0.1 ou 0.3</p></li>
+<li><p>Use C entre <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mo>−</mo><mn>5</mn></mrow></msup><mi>e</mi><msup><mn>2</mn><mn>15</mn></msup></mrow><annotation encoding="application/x-tex">2^{-5} e 2^{15}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.814108em; vertical-align: 0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">5</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">e</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span></span></span> uniforme no expoente</p></li>
+</ul>
+<h3 id="svm-com-kernel-rbf">SVM com kernel RBF</h3>
+<p>Selecione 10 trinca aleatórias ente:</p>
+<ul>
+<li><p>Use epsilon = 0.1 ou 0.3</p></li>
+<li><p>Use C entre <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mo>−</mo><mn>5</mn></mrow></msup><mi>e</mi><msup><mn>2</mn><mn>15</mn></msup></mrow><annotation encoding="application/x-tex">2^{-5} e 2^{15}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.814108em; vertical-align: 0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">5</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">e</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span></span></span> uniforme no expoente</p></li>
+<li><p>Use gamma entre <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mo>−</mo><mn>9</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{-9}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.814108em; vertical-align: 0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span></span></span> e <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">2^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.814108em; vertical-align: 0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span> uniforme no expoente</p></li>
+</ul>
+<h3 id="knn">KNN</h3>
+<p>K: 10 números aleatórios entre 1 e 1000</p>
+<h3 id="mlp">MLP</h3>
+<p>Neurônios na camada do meio: de 5 a 20, de três em três</p>
+<h3 id="arvore-de-decisão">Arvore de decisão</h3>
+<p>Use prunning.</p>
+<p>ccp_alpha 10 números aleatórios entre 0.0 e 0.04</p>
+<h3 id="random-forest">Random Forest</h3>
+<p>Use todas as combinações dos valores abaixo.</p>
+<ul>
+<li><p>n_estimators: use os valores: 10, 100 e 1000</p></li>
+<li><p>max_features: use os valores 5, 10, <strong>22</strong> (<strong>NOVO</strong> era 24 antes)</p></li>
+</ul>
+<h3 id="gbm">GBM</h3>
+<p>Selecione 10 trinca aleatórias ente:</p>
+<ul>
+<li><p>n_estimators: de 5 a 100</p></li>
+<li><p>learning_rate: de 0.01 a 0.3</p></li>
+<li><p>max_depth: 2 ou 3</p></li>
+</ul>
+<!-- Local Variables: -->
+<!-- language: pt_BR -->
+<!-- End: -->
+
+
+<style>.lXvAzWdsJAPzcLK { color:#00acdb !important; } 
+.lXvAzWdsJAPzcLK.ba-outline { outline-color:#00acdb } 
+.lXvAzWdsJAPzcLK.TnX3i6iwXH3bP:hover, .lXvAzWdsJAPzcLK.TnX3i6iwXH3bP.active { color:#0098c2 !important; }
+.xlda2n556Y0tRVQ { background-color:#00acdb !important; }
+.xlda2n556Y0tRVQ.TnX3i6iwXH3bP:hover, .xlda2n556Y0tRVQ.TnX3i6iwXH3bP.active { background:#0098c2 !important; }
+.ba-border-primary { border-color:#0098c2 !important }
+.M8DlQkZu5Ur { background:#f6a800 !important; color:white !important; }
+.M8DlQkZu5Ur.TnX3i6iwXH3bP:hover, .M8DlQkZu5Ur.TnX3i6iwXH3bP.active { background:#ab7500 !important; }
+.ba-color-secondary { color:#f6a800 !important;  }
+.ba-color-secondary.TnX3i6iwXH3bP:hover, .ba-color-secondary.TnX3i6iwXH3bP.active { color:#ab7500 !important; }
+.ba-color-tertiary { color:#f6a800 !important }
+.ba-color-tertiary.TnX3i6iwXH3bP:hover, .ba-color-tertiary.TnX3i6iwXH3bP.active { color:#ab7500 !important }
+.I0vIidgjrjVdupMy { background:#f6a800 !important }
+.ba-bg-tertiary.TnX3i6iwXH3bP:hover, .ba-bg-tertiary.TnX3i6iwXH3bP.active { background:#ab7500 !important }</style></body></html>
