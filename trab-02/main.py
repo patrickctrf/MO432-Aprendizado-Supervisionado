@@ -1,4 +1,5 @@
 import datetime
+import random
 
 import numpy as np
 from pandas import read_csv
@@ -33,11 +34,10 @@ if __name__ == '__main__':
     df = read_csv("Bias_correction_ucl.csv")
     # Elimina a coluna Next_Tmin.
     df = df.drop(columns=["Next_Tmin"])
+    # Elimina a coluna Date
+    df = df.drop(columns=["Date"])
     # Elimina todas as linhas que contenham NAN (valor faltante).
     df = df.dropna(axis=0, how='any')
-    # Troca a representacao da data na coluna "Date" de string para
-    # timestamp (float).
-    df["Date"] = df["Date"].apply(date_to_timestamp)
 
     # Passando os dados para um dataset numpy
     y_data = df["Next_Tmax"].to_numpy()
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -168,37 +168,37 @@ if __name__ == '__main__':
 
     # ============SVR-SVM-LINEAR================================================
 
-    np.random.seed(1234)
+    np.random.seed(3333)
 
     # Gera os parametros de entrada aleatoriamente. Alguns sao uniformes nos
     # EXPOENTES.
     c = 2 ** np.random.uniform(-5, 15, 10)
-    epsilon = [0.1, 0.3]
+    epsilon = random.choices([0.1, 0.3], k=10)
 
     # Une os parametros de entrada em um unico dicionario a ser passado para a
     # funcao.
     parametros = {'C': c, 'epsilon': epsilon}
 
-    shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = SVR(kernel="linear")
+    shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3333)
+    regressor = SVR(max_iter=-1, cache_size=7000, kernel="linear")
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
 
-    print("\n---------------------SVR-SVM-LINEAR---------------------------")
+    print("\n----------------SVR-SVM-LINEAR----------------")
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
     print("\nMelhor error score: \n", -cv_results.best_score_)
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = SVR(kernel="linear")
+    regressor = SVR(max_iter=-1, cache_size=7000, kernel="linear")
     cv_results = \
         cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
                        cv=shuffle_splitter,
@@ -209,38 +209,38 @@ if __name__ == '__main__':
 
     # ============SVR-SVM-RBF================================================
 
-    np.random.seed(1234)
+    np.random.seed(3333)
 
     # Gera os parametros de entrada aleatoriamente. Alguns sao uniformes nos
     # EXPOENTES.
     c = 2 ** np.random.uniform(-5, 15, 10)
-    gamma = 2 ** np.random.uniform(-15, 3, 10)
-    epsilon = [0.1, 0.3]
+    gamma = 2 ** np.random.uniform(-9, 3, 10)
+    epsilon = random.choices([0.1, 0.3], k=10)
 
     # Une os parametros de entrada em um unico dicionario a ser passado para a
     # funcao.
     parametros = {'C': c, 'gamma': gamma, 'epsilon': epsilon}
 
-    shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = SVR(kernel="rbf")
+    shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3333)
+    regressor = SVR(max_iter=-1, cache_size=7000, kernel="rbf")
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
 
-    print("\n---------------------SVR-SVM-RBF---------------------------")
+    print("\n----------------SVR-SVM-RBF----------------")
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
     print("\nMelhor error score: \n", -cv_results.best_score_)
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = SVR(kernel="rbf")
+    regressor = SVR(max_iter=-1, cache_size=7000, kernel="rbf")
     cv_results = \
         cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
                        cv=shuffle_splitter,
@@ -265,7 +265,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -304,7 +304,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -343,7 +343,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -383,7 +383,7 @@ if __name__ == '__main__':
     cv_results = \
         GridSearchCV(estimator=regressor, cv=shuffle_splitter,
                      param_grid=parametros,
-                     verbose=1,
+                     verbose=1, 
                      n_jobs=1,
                      scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
@@ -424,7 +424,7 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1,
+                           verbose=1, 
                            n_jobs=4,
                            scoring=make_scorer(mean_squared_error, greater_is_better=False))
 
