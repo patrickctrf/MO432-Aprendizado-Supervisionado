@@ -3,7 +3,6 @@ import random
 
 import numpy as np
 from pandas import read_csv
-from scipy.stats import uniform
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.metrics import make_scorer, mean_squared_error, mean_absolute_error
@@ -81,9 +80,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -106,9 +105,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -132,9 +131,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -157,9 +156,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -172,8 +171,8 @@ if __name__ == '__main__':
 
     # Gera os parametros de entrada aleatoriamente. Alguns sao uniformes nos
     # EXPOENTES.
-    c = 2 ** np.random.uniform(-5, 15, 10)
-    epsilon = random.choices([0.1, 0.3], k=10)
+    c = 2 ** np.linspace(-5, 15, 10)
+    epsilon = np.array(random.choices([0.1, 0.3], k=10))
 
     # Une os parametros de entrada em um unico dicionario a ser passado para a
     # funcao.
@@ -184,9 +183,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -213,9 +212,9 @@ if __name__ == '__main__':
 
     # Gera os parametros de entrada aleatoriamente. Alguns sao uniformes nos
     # EXPOENTES.
-    c = 2 ** np.random.uniform(-5, 15, 10)
-    gamma = 2 ** np.random.uniform(-9, 3, 10)
-    epsilon = random.choices([0.1, 0.3], k=10)
+    c = 2 ** np.linspace(-5, 15, 10)
+    gamma = 2 ** np.linspace(-9, 3, 10)
+    epsilon = np.array(random.choices([0.1, 0.3], k=10))
 
     # Une os parametros de entrada em um unico dicionario a ser passado para a
     # funcao.
@@ -226,9 +225,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -254,7 +253,7 @@ if __name__ == '__main__':
     np.random.seed(1234)
 
     # Gera os parametros de entrada aleatoriamente.
-    n_neighbors = np.random.uniform(1, 1000, 10).astype("int32")
+    n_neighbors = np.linspace(1, 1000, 10).astype("int32")
 
     # Une os parametros de entrada em um unico dicionario a ser passado para a
     # funcao.
@@ -265,9 +264,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -304,9 +303,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -332,7 +331,7 @@ if __name__ == '__main__':
     np.random.seed(1234)
 
     # Gera os parametros de entrada aleatoriamente.
-    ccp_alpha = np.random.uniform(0, 0.04, 10)
+    ccp_alpha = np.linspace(0, 0.04, 10)
 
     # Une os parametros de entrada em um unico dicionario a ser passado para a
     # funcao.
@@ -343,9 +342,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -383,9 +382,9 @@ if __name__ == '__main__':
     cv_results = \
         GridSearchCV(estimator=regressor, cv=shuffle_splitter,
                      param_grid=parametros,
-                     verbose=1, 
+                     verbose=1,
                      n_jobs=1,
-                     scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                     scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
@@ -411,7 +410,7 @@ if __name__ == '__main__':
     np.random.seed(1234)
 
     # Gera os parametros de entrada aleatoriamente.
-    n_estimators = np.random.uniform(5, 100, 10).astype("int32")
+    n_estimators = np.linspace(5, 100, 10).astype("int32")
     learning_rate = [0.01, 0.3]
     max_depth = [2, 3]
 
@@ -424,9 +423,9 @@ if __name__ == '__main__':
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
-                           verbose=1, 
+                           verbose=1,
                            n_jobs=4,
-                           scoring=make_scorer(mean_squared_error, greater_is_better=False))
+                           scoring="neg_root_mean_squared_error")
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
