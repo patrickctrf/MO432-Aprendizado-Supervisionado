@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", cv_results.best_score_)
+    print("\nMelhor AUC score: \n", cv_results.best_score_, "\n")
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = LogisticRegression()
@@ -162,7 +162,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", cv_results.best_score_)
+    print("\nMelhor AUC score: \n", cv_results.best_score_, "\n")
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = SVC(max_iter=-1, cache_size=7000, kernel="linear", probability=True)
@@ -202,7 +202,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", cv_results.best_score_)
+    print("\nMelhor AUC score: \n", cv_results.best_score_, "\n")
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = SVC(max_iter=-1, cache_size=7000, kernel="rbf", probability=True)
@@ -253,7 +253,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", cv_results.best_score_)
+    print("\nMelhor AUC score: \n", cv_results.best_score_, "\n")
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = KNeighborsClassifier()
@@ -291,7 +291,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", cv_results.best_score_)
+    print("\nMelhor AUC score: \n", cv_results.best_score_, "\n")
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = MLPClassifier()
@@ -329,7 +329,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", cv_results.best_score_)
+    print("\nMelhor AUC score: \n", cv_results.best_score_, "\n")
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = DecisionTreeClassifier()
@@ -368,7 +368,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", cv_results.best_score_)
+    print("\nMelhor AUC score: \n", cv_results.best_score_, "\n")
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = RandomForestClassifier()
@@ -408,7 +408,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", cv_results.best_score_)
+    print("\nMelhor AUC score: \n", cv_results.best_score_, "\n")
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = GradientBoostingClassifier()
