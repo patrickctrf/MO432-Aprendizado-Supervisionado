@@ -1,18 +1,18 @@
 import datetime
-import random
 
 import numpy as np
 from pandas import read_csv, get_dummies
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.linear_model import LinearRegression, Ridge, Lasso, LogisticRegression
-from sklearn.metrics import make_scorer, mean_squared_error, mean_absolute_error, roc_auc_score
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import make_scorer, roc_auc_score
 from sklearn.model_selection import ShuffleSplit, cross_validate, RandomizedSearchCV, GridSearchCV
-from sklearn.neighbors import KNeighborsRegressor, KNeighborsClassifier
-from sklearn.neural_network import MLPRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVR, SVC
-from sklearn.tree import DecisionTreeRegressor
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
 
 
 def date_to_timestamp(date_string):
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     print("\n----------------Logistic-Regression----------------")
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = LogisticRegression(penalty=None)
+    regressor = LogisticRegression(penalty="none")
     cv_results = \
         cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
                        cv=shuffle_splitter,
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", -cv_results.best_score_)
+    print("\nMelhor error score: \n", cv_results.best_score_)
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = LogisticRegression()
@@ -134,84 +134,97 @@ if __name__ == '__main__':
 
     print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
 
-    # # ============SVC-SVM-LINEAR================================================
-    # np.random.seed(3333)
-    #
-    # # Gera os parametros de entrada aleatoriamente. Alguns sao uniformes nos
-    # # EXPOENTES.
-    # c = 2 ** np.random.uniform(-5, 15, 10)
-    #
-    # # Une os parametros de entrada em um unico dicionario a ser passado para a
-    # # funcao.
-    # parametros = {'C': c}
-    #
-    # shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3333)
-    # regressor = SVC(max_iter=-1, cache_size=7000, kernel="linear", probability=True)
-    # cv_results = \
-    #     RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
-    #                        param_distributions=parametros,
-    #                        refit="AUC",
-    #                        verbose=1,
-    #                        n_jobs=4,
-    #                        scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
-    #
-    # # Realizamos a busca atraves do treinamento
-    # cv_results.fit(X_data_scaled, y_data)
-    #
-    # print("\n----------------SVC-SVM-LINEAR----------------")
-    #
-    # print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
-    #
-    # print("\nMelhor error score: \n", -cv_results.best_score_)
-    #
-    # shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    # regressor = SVC(max_iter=-1, cache_size=7000, kernel="linear", probability=True)
-    # cv_results = \
-    #     cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
-    #                    cv=shuffle_splitter,
-    #                    scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
-    #
-    # print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
-    #
-    # # ============SVC-SVM-RBF===================================================
-    # np.random.seed(3333)
-    #
-    # # Gera os parametros de entrada aleatoriamente. Alguns sao uniformes nos
-    # # EXPOENTES.
-    # c = 2 ** np.random.uniform(-5, 15, 10)
-    # gamma = 2 ** np.random.uniform(-9, 3, 10)
-    #
-    # # Une os parametros de entrada em um unico dicionario a ser passado para a
-    # # funcao.
-    # parametros = {'C': c, 'gamma': gamma}
-    #
-    # shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3333)
-    # regressor = SVC(max_iter=-1, cache_size=7000, kernel="rbf", probability=True)
-    # cv_results = \
-    #     RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
-    #                        param_distributions=parametros,
-    #                        refit="AUC",
-    #                        verbose=1,
-    #                        n_jobs=4,
-    #                        scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
-    #
-    # # Realizamos a busca atraves do treinamento
-    # cv_results.fit(X_data_scaled, y_data)
-    #
-    # print("\n----------------SVC-SVM-RBF----------------")
-    #
-    # print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
-    #
-    # print("\nMelhor error score: \n", -cv_results.best_score_)
-    #
-    # shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    # regressor = SVC(max_iter=-1, cache_size=7000, kernel="rbf", probability=True)
-    # cv_results = \
-    #     cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
-    #                    cv=shuffle_splitter,
-    #                    scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
-    #
-    # print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
+    # ============SVC-SVM-LINEAR================================================
+    np.random.seed(3333)
+
+    # Gera os parametros de entrada aleatoriamente. Alguns sao uniformes nos
+    # EXPOENTES.
+    c = 2 ** np.random.uniform(-5, 15, 10)
+
+    # Une os parametros de entrada em um unico dicionario a ser passado para a
+    # funcao.
+    parametros = {'C': c}
+
+    shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3333)
+    regressor = SVC(max_iter=-1, cache_size=7000, kernel="linear", probability=True)
+    cv_results = \
+        RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
+                           param_distributions=parametros,
+                           refit="AUC",
+                           verbose=1,
+                           n_jobs=4,
+                           scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
+
+    # Realizamos a busca atraves do treinamento
+    cv_results.fit(X_data_scaled, y_data)
+
+    print("\n----------------SVC-SVM-LINEAR----------------")
+
+    print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
+
+    print("\nMelhor error score: \n", cv_results.best_score_)
+
+    shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
+    regressor = SVC(max_iter=-1, cache_size=7000, kernel="linear", probability=True)
+    cv_results = \
+        cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
+                       cv=shuffle_splitter,
+                       scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
+
+    print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
+
+    # ============SVC-SVM-RBF===================================================
+    np.random.seed(3333)
+
+    # Gera os parametros de entrada aleatoriamente. Alguns sao uniformes nos
+    # EXPOENTES.
+    c = 2 ** np.random.uniform(-5, 15, 10)
+    gamma = 2 ** np.random.uniform(-9, 3, 10)
+
+    # Une os parametros de entrada em um unico dicionario a ser passado para a
+    # funcao.
+    parametros = {'C': c, 'gamma': gamma}
+
+    shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3333)
+    regressor = SVC(max_iter=-1, cache_size=7000, kernel="rbf", probability=True)
+    cv_results = \
+        RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
+                           param_distributions=parametros,
+                           refit="AUC",
+                           verbose=1,
+                           n_jobs=4,
+                           scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
+
+    # Realizamos a busca atraves do treinamento
+    cv_results.fit(X_data_scaled, y_data)
+
+    print("\n----------------SVC-SVM-RBF----------------")
+
+    print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
+
+    print("\nMelhor error score: \n", cv_results.best_score_)
+
+    shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
+    regressor = SVC(max_iter=-1, cache_size=7000, kernel="rbf", probability=True)
+    cv_results = \
+        cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
+                       cv=shuffle_splitter,
+                       scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
+
+    print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
+
+    # ============GaussianNB-Naive-Bayes========================================
+
+    print("\n----------------GaussianNB-Naive-Bayes----------------")
+
+    shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
+    regressor = GaussianNB()
+    cv_results = \
+        cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
+                       cv=shuffle_splitter,
+                       scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
+
+    print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
 
     # ============KNeighborsRegressor===========================================
     np.random.seed(1234)
@@ -240,7 +253,7 @@ if __name__ == '__main__':
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", -cv_results.best_score_)
+    print("\nMelhor error score: \n", cv_results.best_score_)
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
     regressor = KNeighborsClassifier()
@@ -251,8 +264,7 @@ if __name__ == '__main__':
 
     print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
 
-    # ============MLPRegressor==================================================
-
+    # ============MLPClassifier=================================================
     np.random.seed(1234)
 
     # Gera os parametros de entrada aleatoriamente.
@@ -263,7 +275,7 @@ if __name__ == '__main__':
     parametros = {'hidden_layer_sizes': hidden_layer_sizes}
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = MLPRegressor()
+    regressor = MLPClassifier()
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
@@ -275,14 +287,14 @@ if __name__ == '__main__':
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
 
-    print("\n---------------MLPRegressor-------------------")
+    print("\n---------------MLPClassifier-------------------")
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", -cv_results.best_score_)
+    print("\nMelhor error score: \n", cv_results.best_score_)
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = MLPRegressor()
+    regressor = MLPClassifier()
     cv_results = \
         cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
                        cv=shuffle_splitter,
@@ -290,8 +302,7 @@ if __name__ == '__main__':
 
     print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
 
-    # ============DecisionTreeRegressor=========================================
-
+    # ============DecisionTreeClassifier=========================================
     np.random.seed(1234)
 
     # Gera os parametros de entrada aleatoriamente.
@@ -302,7 +313,7 @@ if __name__ == '__main__':
     parametros = {'ccp_alpha': ccp_alpha}
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = DecisionTreeRegressor()
+    regressor = DecisionTreeClassifier()
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
@@ -314,14 +325,14 @@ if __name__ == '__main__':
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
 
-    print("\n--------------DecisionTreeRegressor------------------")
+    print("\n--------------DecisionTreeClassifier------------------")
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", -cv_results.best_score_)
+    print("\nMelhor error score: \n", cv_results.best_score_)
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = DecisionTreeRegressor()
+    regressor = DecisionTreeClassifier()
     cv_results = \
         cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
                        cv=shuffle_splitter,
@@ -329,38 +340,38 @@ if __name__ == '__main__':
 
     print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
 
-    # ============RandomForestRegressor=========================================
-
+    # ============RandomForestClassifier========================================
     np.random.seed(1234)
 
     # Gera os parametros de entrada aleatoriamente.
     n_estimators = [10, 100, 1000]
-    max_features = [5, 10, 22]
+    max_features = [5, 8, 10]
 
     # Une os parametros de entrada em um unico dicionario a ser passado para a
     # funcao.
     parametros = {'n_estimators': n_estimators, 'max_features': max_features}
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = RandomForestRegressor()
+    regressor = RandomForestClassifier()
     cv_results = \
         GridSearchCV(estimator=regressor, cv=shuffle_splitter,
                      param_grid=parametros,
                      verbose=1,
+                     refit="AUC",
                      n_jobs=1,
                      scoring={"AUC": make_scorer(roc_auc_score, greater_is_better=True, needs_proba=True)})
 
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
 
-    print("\n--------------RandomForestRegressor------------------")
+    print("\n--------------RandomForestClassifier------------------")
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", -cv_results.best_score_)
+    print("\nMelhor error score: \n", cv_results.best_score_)
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = RandomForestRegressor()
+    regressor = RandomForestClassifier()
     cv_results = \
         cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
                        cv=shuffle_splitter,
@@ -368,8 +379,7 @@ if __name__ == '__main__':
 
     print("\nScore AUC parâmetros default: ", (cv_results["test_AUC"]).mean())
 
-    # ============GradientBoostingRegressor=====================================
-
+    # ============GradientBoostingClassifier====================================
     np.random.seed(1234)
 
     # Gera os parametros de entrada aleatoriamente.
@@ -382,7 +392,7 @@ if __name__ == '__main__':
     parametros = {'n_estimators': n_estimators, 'learning_rate': learning_rate, 'max_depth': max_depth}
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = GradientBoostingRegressor()
+    regressor = GradientBoostingClassifier()
     cv_results = \
         RandomizedSearchCV(estimator=regressor, cv=shuffle_splitter,
                            param_distributions=parametros,
@@ -394,14 +404,14 @@ if __name__ == '__main__':
     # Realizamos a busca atraves do treinamento
     cv_results.fit(X_data_scaled, y_data)
 
-    print("\n--------------GradientBoostingRegressor------------------")
+    print("\n--------------GradientBoostingClassifier------------------")
 
     print("\nMelhor conjunto de parâmetros: \n", cv_results.best_estimator_)
 
-    print("\nMelhor error score: \n", -cv_results.best_score_)
+    print("\nMelhor error score: \n", cv_results.best_score_)
 
     shuffle_splitter = ShuffleSplit(n_splits=5, test_size=0.3, random_state=1234)
-    regressor = GradientBoostingRegressor()
+    regressor = GradientBoostingClassifier()
     cv_results = \
         cross_validate(estimator=regressor, X=X_data_scaled, y=y_data,
                        cv=shuffle_splitter,

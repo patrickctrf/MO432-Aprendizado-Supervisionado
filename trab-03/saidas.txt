@@ -1,0 +1,105 @@
+
+----------------Logistic-Regression----------------
+
+Score AUC parâmetros default:  0.9197457062275621
+Fitting 5 folds for each of 10 candidates, totalling 50 fits
+
+----------------Logistic-Regression-L2----------------
+
+Melhor conjunto de parâmetros: 
+ LogisticRegression(C=0.026020058428635535)
+
+Melhor error score: 
+ 0.9405899735641581
+
+Score AUC parâmetros default:  0.9282021419350347
+
+----------------LDA----------------
+
+Score AUC parâmetros default:  0.9318615506427577
+
+----------------QDA----------------
+
+Score AUC parâmetros default:  0.8205157842023286
+Fitting 5 folds for each of 10 candidates, totalling 50 fits
+
+----------------SVC-SVM-LINEAR----------------
+
+Melhor conjunto de parâmetros: 
+ SVC(C=31.925195621733018, cache_size=7000, kernel='linear', probability=True)
+
+Melhor error score: 
+ 0.9280919235124699
+
+Score AUC parâmetros default:  0.9207496953677872
+Fitting 5 folds for each of 10 candidates, totalling 50 fits
+
+----------------SVC-SVM-RBF----------------
+
+Melhor conjunto de parâmetros: 
+ SVC(C=0.16414560961711494, cache_size=7000, gamma=0.00699943241971803,
+    probability=True)
+
+Melhor error score: 
+ 0.9336222210956361
+
+Score AUC parâmetros default:  0.9341840620406815
+
+----------------GaussianNB-Naive-Bayes----------------
+
+Score AUC parâmetros default:  0.8632802184759667
+Fitting 5 folds for each of 10 candidates, totalling 50 fits
+
+----------------KNeighborsClassifier----------------
+
+Melhor conjunto de parâmetros: 
+ KNeighborsClassifier(n_neighbors=187)
+
+Melhor error score: 
+ 0.9273362726256549
+
+Score AUC parâmetros default:  0.8759436830922536
+Fitting 5 folds for each of 6 candidates, totalling 30 fits
+
+---------------MLPClassifier-------------------
+
+Melhor conjunto de parâmetros: 
+ MLPClassifier(hidden_layer_sizes=17)
+
+Melhor error score: 
+ 0.9267086969744721
+
+Score AUC parâmetros default:  0.9142395181818566
+Fitting 5 folds for each of 10 candidates, totalling 50 fits
+
+--------------DecisionTreeClassifier------------------
+
+Melhor conjunto de parâmetros: 
+ DecisionTreeClassifier(ccp_alpha=0.01750910956028458)
+
+Melhor error score: 
+ 0.9091774473094114
+
+Score AUC parâmetros default:  0.8272019408426212
+Fitting 5 folds for each of 9 candidates, totalling 45 fits
+
+--------------RandomForestClassifier------------------
+
+Melhor conjunto de parâmetros: 
+ RandomForestClassifier(max_features=10, n_estimators=1000)
+
+Melhor error score: 
+ 0.943294639551229
+
+Score AUC parâmetros default:  0.9395490611060222
+Fitting 5 folds for each of 10 candidates, totalling 50 fits
+
+--------------GradientBoostingClassifier------------------
+
+Melhor conjunto de parâmetros: 
+ GradientBoostingClassifier(learning_rate=0.01, max_depth=2, n_estimators=96)
+
+Melhor error score: 
+ 0.9412940669742994
+
+Score AUC parâmetros default:  0.9379176895304149
