@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)https://www.ic.unicamp.br/~wainer/cursos/1s2020/432/exercicio4.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><style type="text/css" id="dark-mode-custom-style"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="Jacques Wainer">
+  <title>Exercício 4 - Versão 2</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="./Exercício 4 - Versão 2_files/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="./Exercício 4 - Versão 2_files/katex.min.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head><evlist></evlist>
+<body data-gr-c-s-loaded="true">
+<header id="title-block-header">
+<h1 class="title">Exercício 4 - Versão 2</h1>
+<p class="author">Jacques Wainer</p>
+</header>
+<h1 id="exercício-4---versão-2">Exercício 4 - Versão 2</h1>
+<p><strong>Mudanças versão 2</strong> veja a seção detalhes sobre como usar o conjunto de exploração e a seção sobre o relatório final.</p>
+<p>Data de entrega: 10/8 a meia noite, via email.</p>
+<p>Objetivos: fazer previsões em series temporais usando as técnicas de aprendizado de maquina vistas.</p>
+<h2 id="leia">Leia</h2>
+<p>Leia o arquivo <a href="https://www.ic.unicamp.br/~wainer/cursos/1s2020/432/dados4.csv">dados4.csv</a>. O arquivo contem a taxa de cambio entre o dólar e o euro, desde 1999-01-04 até 2020-07-24. O atributo data (formato YYYY-MM-DD) não é importante e deve ser removido mas obviamente a sequencia de valores é a coisa importante.</p>
+<p>Os dados mais recentes estão no começo do arquivo e os mais antigos ao final.</p>
+<h2 id="separe-o-conjunto-de-medida">Separe o conjunto de medida</h2>
+<p>Separe as 10% das entradas mais recentes. Você reportará sua taxa de acerto nesses 10% e, segundo o que eu discuti na aula de metodologia, você não pode usar a taxa de acerto nesse conjunto para tomar decisões. Vamos chamar este conjunto de conjunto de medida.</p>
+<p>Você deve usar as primeiras 90% das medidas para definir que classificadores e regressores você usara, que preprocessamento (se é que você usará algum), que hiperparametros, e que janela de do passado para fazer as previsões (mais sobre isso abaixo).</p>
+<h2 id="medidas">Medidas</h2>
+<p>Eu estou interessado em 2 medidas.</p>
+<ul>
+<li><p>o problema de classificação de prever se a taxa de cambio vai subir ou descer no próximo dia. A medida a ser usada é acurácia</p></li>
+<li><p>o problema de regressão de prever a taxa de cambio no próximo dia. A medida de erro para esse problema é RMSE.</p></li>
+</ul>
+<p>Reporte essas 2 medidas no conjunto de medida.</p>
+<h2 id="previsão-em-series-temporais">Previsão em series temporais</h2>
+<p>Previsão em series temporais, ou usam uma forma de <a href="https://en.wikipedia.org/wiki/Recurrent_neural_network">redes neurais recorrentes RNN</a> que não vimos na disciplina (mas que provavelmente será parte dos tópicos a serem tratados na disciplina de deep learning no semestre que vem) ou usam a previsão numa janela fixa do passado.</p>
+<p>Nesta segunda alternativa, fixa -se uma janela <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.02691em;">w</span></span></span></span></span>, e para fazer a previsão do dado <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.58056em; vertical-align: -0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span></span></span></span></span>, usa-se a o vetor <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mrow><mi>i</mi><mo>−</mo><mi>w</mi></mrow></msub><mo separator="true">,</mo><msub><mi>x</mi><mrow><mi>i</mi><mo>−</mo><mi>w</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>…</mo><msub><mi>x</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">x_{i-w},x_{i-w+1} \dots x_{i-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.638891em; vertical-align: -0.208331em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight" style="margin-right: 0.02691em;">w</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.208331em;"><span class=""></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight" style="margin-right: 0.02691em;">w</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.208331em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.208331em;"><span class=""></span></span></span></span></span></span></span></span></span></span>. Ou seja você usa um vetor de tamanho <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.02691em;">w</span></span></span></span></span> para prever o próximo valor da serie. Essa técnica é de vez em quanto chamada de <strong>rolling</strong> ou <strong>sliding window</strong></p>
+<h2 id="decisões-de-projeto">Decisões de projeto</h2>
+<p>Você tem varias decisões de projeto que você deve explorar. Essas decisões devem ser exploradas - não há nenhuma decisão em aprendizado de maquina que pode ser pensada - tudo precisa ser explorado, algumas coisas dão certo algumas não no problema em específico.</p>
+<ul>
+<li><p>qual a janela de previsão <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.02691em;">w</span></span></span></span></span> Essa é com certeza um dos mais importantes parâmetros que você precisa explorar</p></li>
+<li><p>você vai tratar do problema de classificação como um problema em separado ou como uma simplificação do problema de regressão (se o valor predito pelo do regressor é maior que o do dia anterior reporte subir para o classificador.</p></li>
+<li><p>que preprocessamento dos dados você vai executar. Um que me parece razoável é prever a <strong>mudança</strong> do valor da taxa em relação ao ultimo dia, em vez de prever o valor da taxa no próximo dia. Quais outros preprocessamento valem a pena ser feitos.</p></li>
+<li><p>que algoritmos de regressão e classificação e seus hiperparametros você vai usa?</p></li>
+<li><p>o seu conjunto de treino é limitado ou não. Uma vez que você selecionou um conjunto de teste (dento dos 90%) todas os dados anteriores podem ser usados para treino (você treina usando as rolling windows - cada tupla de <span class="math inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.43056em; vertical-align: 0em;"></span><span class="mord mathdefault" style="margin-right: 0.02691em;">w</span></span></span></span></span> valores dos dias anteriores associados ao valor do próximo dia). Mas pode ser que valha a pena não “olhar muito para o passado” - pode ser que só vale a pena olhar para um passado limitado para o treino.</p></li>
+</ul>
+<h3 id="detalhes">Detalhes</h3>
+<p>Você tem os conjunto de 90% dos dados para tomas essas decisões. Você deve fazer alguma validação cruzada neste conjunto de dados para tomar essas decisões. Eu sugiro uma repetição de 5 vezes de um split de treino e teste, mas se lembre que o correto em series temporais é que o conjunto de teste é sempre no futuro do conjunto de treino.</p>
+<p>Por exemplo, para simplificar, vamos dizer que os dados de 2019 e 2020 serão usados para as medidas finais. Assim voce tem os dados de 1999 a 2018 para tomar todas as suas decisoes. Voce deve dividir esses dados em (digamos 5) pares treino/teste. Como o primeiro par, vamos dizer voce usa de 1999 a 2016 como treino e 2017+2018 como teste. Para o segundo par, voce escolhe 1999 a 2014 como treino e 2015+2016 como teste, e assim por diante. Voce mede a acurácia/erro nesses conjuntos de testes tendo treinado do conjunto de treino correspondente, e escolhe a melhor alternativa (melhor média)</p>
+<p>Voce também pode diminuir os conjuntos de treino, de forma que eles tenham o mesmo tamanho. Por exemplo o primeiro treino vai de 2006 a 2016, o segundo de 2004 a 2014, e assim por diante.</p>
+<p>No final, voce treina a sua melhor alternativa no conjunto dos 90% inteiro (nesse exemplo de 1999 a 2018) e apresenta os resultados finais (RMSE e acurácia sobre a decisão se o cambio vai subir ou não) para o conjunto de medida final 2019+2020.</p>
+<h2 id="outras-questões">Outras questões</h2>
+<p>Previsões em series temporais é um assunto muito antigo, anterior a grande maioria das técnicas de aprendizado de maquina. Essas técnicas mais antigas se preocupam com coisas como trend (direção geral de uma serie por exemplo taxa de cambio real/dolar, que na media sempre sobe) e seasonality (variações periódicas na serie como por exemplo uso de energia, que depende do dia da semana - fim de semana ou não - e do período no ano - inverno vs verão).</p>
+<p>Você encontrara várias páginas na internet com discussão desses tópicos. No caso da nossa serie, não acho que trend e seasonality sejam problemas e acho que você não deve se preocupar com isso.</p>
+<p>Há técnicas anteriores a aprendizado de maquina que também acho que você não precisa se preocupar, como ARIMA ou ARMA, etc. Há coisas como auto-correlações que são partes destas técnicas que também acho que você não precisa se preocupar. Esse blog, por exemplo <a href="https://www.machinelearningplus.com/time-series/time-series-analysis-python/" class="uri">https://www.machinelearningplus.com/time-series/time-series-analysis-python/</a> discute essas técnicas “mais tradicionais”. Este <a href="https://machinelearningmastery.com/time-series-forecasting-methods-in-python-cheat-sheet/" class="uri">https://machinelearningmastery.com/time-series-forecasting-methods-in-python-cheat-sheet/</a> também</p>
+<h2 id="relatório-final">Relatório Final</h2>
+<p>No relatório final, descreva o algoritmo final, os hiperparametros, o preprocessamento, etc e reporte o RMSE e a acurácia sobre a decisão se a taxa subira ou não (ficar igual é não subir) no conjunto de medida final. Reporte também as medidas que voce obteve usando os conjuntos de testes - eu quero comparar se os valores que voce obteve quando explorando as alternativas é parecido com o valor quando usando o conjunto final de avaliação.</p>
+<p>Descreva as alternativas que voce testou e as medidas médias dessas alternativas no conjunto de exploração (os 90%). Nao precisa explicitar todos os valores de hiperparametros que voce testou, apenas os melhores valores. Eu estou interessado em a) a sua criatividade em propor e testar diferentes alternativas, b) seu rigor em ter testados um bom numero de regressores e classificadores (se voce decidir usar classificadores).</p>
+<p>O relatório pode ter poucas paginas, desde que ele descreva suficientemente bem a solução final e as mais interessantes alternativas testadas. Eu <strong>NAO</strong> preciso do notebook Jupyter de todas as alternativas.</p>
+<!-- Local Variables: -->
+<!-- ispell-dictionary: "pt_BR" -->
+<!-- End: -->
+
+
+<style>.lXvAzWdsJAPzcLK { color:#00acdb !important; } 
+.lXvAzWdsJAPzcLK.ba-outline { outline-color:#00acdb } 
+.lXvAzWdsJAPzcLK.TnX3i6iwXH3bP:hover, .lXvAzWdsJAPzcLK.TnX3i6iwXH3bP.active { color:#0098c2 !important; }
+.xlda2n556Y0tRVQ { background-color:#00acdb !important; }
+.xlda2n556Y0tRVQ.TnX3i6iwXH3bP:hover, .xlda2n556Y0tRVQ.TnX3i6iwXH3bP.active { background:#0098c2 !important; }
+.ba-border-primary { border-color:#0098c2 !important }
+.M8DlQkZu5Ur { background:#f6a800 !important; color:white !important; }
+.M8DlQkZu5Ur.TnX3i6iwXH3bP:hover, .M8DlQkZu5Ur.TnX3i6iwXH3bP.active { background:#ab7500 !important; }
+.ba-color-secondary { color:#f6a800 !important;  }
+.ba-color-secondary.TnX3i6iwXH3bP:hover, .ba-color-secondary.TnX3i6iwXH3bP.active { color:#ab7500 !important; }
+.ba-color-tertiary { color:#f6a800 !important }
+.ba-color-tertiary.TnX3i6iwXH3bP:hover, .ba-color-tertiary.TnX3i6iwXH3bP.active { color:#ab7500 !important }
+.I0vIidgjrjVdupMy { background:#f6a800 !important }
+.ba-bg-tertiary.TnX3i6iwXH3bP:hover, .ba-bg-tertiary.TnX3i6iwXH3bP.active { background:#ab7500 !important }</style></body></html>
