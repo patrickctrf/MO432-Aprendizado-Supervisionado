@@ -1,8 +1,8 @@
 import datetime
 
 from pandas import read_csv
-from sklearn.preprocessing import MinMaxScaler
 from ptk.timeseries import time_series_split, TimeSeriesSplitCV
+from sklearn.preprocessing import MinMaxScaler
 
 
 def date_to_timestamp(date_string):

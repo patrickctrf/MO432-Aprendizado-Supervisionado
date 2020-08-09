@@ -134,7 +134,7 @@ Generate indices to split data into training and test set.
             # validation, temos que fazer uma list com o acumulado do treino ate entao
             if self.blocking_split is False:
                 if i > 0:
-                    accumulate_list.append(hstack((accumulate_list[i-1], test, train)))
+                    accumulate_list.append(hstack((accumulate_list[i - 1], test, train)))
                 else:
                     accumulate_list.append(train)
 
