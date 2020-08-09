@@ -1,4 +1,4 @@
-from numpy import ones, where, array, array_split
+from numpy import ones, where, array, array_split, hstack
 
 
 def time_series_split(data_x, data_y=None, sampling_windows_size=10, n_steps_prediction=1, stateful=False, is_classifier=False, threshold=0):
@@ -57,7 +57,7 @@ There is no stateful multi-series option because, in this case, your input array
 
 
 class TimeSeriesSplitCV():
-    def __init__(self, n_splits=5, training_percent=0.7, sampling_windows_size=10, n_steps_prediction=1, stateful=False, is_classifier=False, threshold=0):
+    def __init__(self, n_splits=5, training_percent=0.7, sampling_windows_size=10, n_steps_prediction=1, stateful=False, is_classifier=False, threshold=0, blocking_split=False):
         """
 Time series split with cross validation separation as a compatible sklearn-like splitter.
 There are 3 principal modes of splitting data with this function: Stateful single series, non stateful single series, and non stateful multi-series.
@@ -86,6 +86,7 @@ There is no stateful multi-series option because, in this case, your input array
         self.stateful = stateful
         self.is_classifier = is_classifier
         self.threshold = threshold
+        self.blocking_split = blocking_split
 
     def split(self, X, y=None, groups=None):
         """
@@ -102,14 +103,22 @@ Generate indices to split data into training and test set.
 
         train_list = []
         test_list = []
+        accumulate_list = []
 
         for i, single_split in enumerate(splits_indices):
-            train = single_split[:int(single_split.shape[0]*self.training_percent)]
+            train = single_split[:int(single_split.shape[0] * self.training_percent)]
             test = single_split[int(single_split.shape[0] * self.training_percent):]
 
             train_list.append(train)
             test_list.append(test)
 
-        return train_list, test_list
+            if self.blocking_split is False:
+                if i > 0:
+                    accumulate_list.append(hstack((accumulate_list[i-1], test, train)))
+                else:
+                    accumulate_list.append(train)
 
-
+        if self.blocking_split is False:
+            return accumulate_list, test_list
+        else:
+            return train_list, test_list
