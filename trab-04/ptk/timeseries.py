@@ -88,6 +88,17 @@ There is no stateful multi-series option because, in this case, your input array
         self.threshold = threshold
         self.blocking_split = blocking_split
 
+    def get_n_splits(self, X=None, y=None, groups=None):
+        """
+Returns the number of splitting iterations in the cross-validator
+
+        :param X: Always ignored, exists for compatibility.
+        :param y: Always ignored, exists for compatibility.
+        :param groups: Always ignored, exists for compatibility.
+        :return: Number of splitting iterations in the cross-validator.
+        """
+        return self.n_splits
+
     def split(self, X, y=None, groups=None):
         """
 Generate indices to split data into training and test set.
