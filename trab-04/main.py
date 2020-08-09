@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     X, y = time_series_split(train_data.reshape(-1), sampling_windows_size=10, n_steps_prediction=1, is_classifier=False)
 
-    splitter_object = TimeSeriesSplitCV(sampling_windows_size=10, n_splits=5, training_percent=0.7)
+    splitter_object = TimeSeriesSplitCV(sampling_windows_size=10, n_splits=5, training_percent=0.7, blocking_split=False)
     train, test = splitter_object.split(X, y)
 
     x = 0

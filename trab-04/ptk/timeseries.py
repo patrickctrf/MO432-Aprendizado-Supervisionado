@@ -99,10 +99,17 @@ Generate indices to split data into training and test set.
         X = array(X)
         y = array(y)
 
+        # A API do numpy ja providencia uma funcao para realizarmos o split de
+        # um array em partes iguais com N splits. Se nao for um array que se
+        # divide em N partes iguais, a ultima sera menor que as demais.
         splits_indices = array_split(range(X.shape[0]), self.n_splits)
 
+        # listas para retorno
         train_list = []
         test_list = []
+
+        # A lista de acumulada somente sera utilizada em casa de cross
+        # validation nao blocking.
         accumulate_list = []
 
         for i, single_split in enumerate(splits_indices):
@@ -112,12 +119,18 @@ Generate indices to split data into training and test set.
             train_list.append(train)
             test_list.append(test)
 
+            # Se esivermos trabalhando a forma classica (nao blocking) da cross
+            # validation, temos que fazer uma list com o acumulado do treino ate entao
             if self.blocking_split is False:
                 if i > 0:
                     accumulate_list.append(hstack((accumulate_list[i-1], test, train)))
                 else:
                     accumulate_list.append(train)
 
+        # Ha duas principais maneiras de fazer cross validation em series
+        # temporais, sendo a primeira classica e a segunda usando tamanhos
+        # iguais para todos os splits (blocking).
+        # https://hub.packtpub.com/cross-validation-strategies-for-time-series-forecasting-tutorial/
         if self.blocking_split is False:
             return accumulate_list, test_list
         else:
