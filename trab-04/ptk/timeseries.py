@@ -1,7 +1,7 @@
 from numpy import ones, where, array, array_split, hstack
 
 
-def time_series_split(data_x, data_y=None, sampling_windows_size=10, n_steps_prediction=1, stateful=False, is_classifier=False, threshold=0):
+def time_series_split(data_x, data_y=None, sampling_window_size=10, n_steps_prediction=1, stateful=False, is_classifier=False, threshold=1):
     """
 Split the given time series into input (X) and observed (y) data.
 There are 3 principal modes of splitting data with this function: Stateful single series, non stateful single series, and non stateful multi-series.
@@ -15,10 +15,10 @@ There is no stateful multi-series option because, in this case, your input array
 
     :param data_x: array-like input data from your series.
     :param data_y: array-like observed data (target) for your series. Let it be 'None' if dealing with a single component series.
-    :param sampling_windows_size: Size of window sampling (W) or time steps entering your network for each prediction. Must be positive integer.
+    :param sampling_window_size: Size of window sampling (W) or time steps entering your network for each prediction. Must be positive integer.
     :param n_steps_prediction: How many steps it is going to predict ahead. Must be positive integer.
     :param stateful: True or False, indicating whether your network are suposedto work statefully or not, respectively.
-    :param is_classifier: If True, the 'y' output data is transformed into +1 or -1, according to 'threshold' selected by user. Useful for non quantitative prediction (classification, not regression).
+    :param is_classifier: If True, the 'y' output data is transformed into +1 or 0, according to 'threshold' selected by user. Useful for non quantitative prediction (classification, not regression).
     :param threshold: Threshold for 'is_classifier' parameter. Float in the interval of your observed data 'data_y'.
     :return: X input and y observed data, formatted according to the given function parameters.
     """
@@ -31,15 +31,15 @@ There is no stateful multi-series option because, in this case, your input array
 
     if stateful is False:
         # arrays para armazenar as saidas
-        X = ones((data_x.shape[0] - n_steps_prediction - sampling_windows_size, sampling_windows_size) + data_x.shape[1:])
-        y = ones((data_y.shape[0] - n_steps_prediction - sampling_windows_size, n_steps_prediction) + data_y.shape[1:])
+        X = ones((data_x.shape[0] - n_steps_prediction - sampling_window_size, sampling_window_size) + data_x.shape[1:])
+        y = ones((data_y.shape[0] - n_steps_prediction - sampling_window_size, n_steps_prediction) + data_y.shape[1:])
 
         i = 0
-        # Precisamos de N amostras (sampling_windows_size) e as amostras de
+        # Precisamos de N amostras (sampling_window_size) e as amostras de
         # ground truth (n_steps_prediction) para fazer mais um split.
-        while i < data_x.shape[0] - n_steps_prediction - sampling_windows_size:
-            X[i] = (data_x[i:i + sampling_windows_size])
-            y[i] = (data_y[i + sampling_windows_size:(i + sampling_windows_size) + n_steps_prediction])
+        while i < data_x.shape[0] - n_steps_prediction - sampling_window_size:
+            X[i] = (data_x[i:i + sampling_window_size])
+            y[i] = (data_y[i + sampling_window_size:(i + sampling_window_size) + n_steps_prediction])
 
             i += 1
 
@@ -51,13 +51,13 @@ There is no stateful multi-series option because, in this case, your input array
         y = data_y[1:]
 
     if is_classifier is True:
-        y = where(y > threshold, 1.0, -1.0)
+        y = where(y > threshold, 1.0, 0.0)
 
     return X, y
 
 
 class TimeSeriesSplitCV():
-    def __init__(self, n_splits=5, training_percent=0.7, sampling_windows_size=10, n_steps_prediction=1, stateful=False, is_classifier=False, threshold=0, blocking_split=False):
+    def __init__(self, n_splits=5, training_percent=0.7, sampling_window_size=10, n_steps_prediction=1, stateful=False, is_classifier=False, threshold=1, blocking_split=False):
         """
 Time series split with cross validation separation as a compatible sklearn-like splitter.
 There are 3 principal modes of splitting data with this function: Stateful single series, non stateful single series, and non stateful multi-series.
@@ -72,16 +72,16 @@ There is no stateful multi-series option because, in this case, your input array
 
         :param n_splits: Like k-folds split, how many sub series to split.
         :param training_percent: Ratio between train and validation data for cross validation.
-        :param sampling_windows_size: Size of window sampling (W) or time steps entering your network for each prediction. Must be positive integer.
+        :param sampling_window_size: Size of window sampling (W) or time steps entering your network for each prediction. Must be positive integer.
         :param n_steps_prediction: How many steps it is going to predict ahead. Must be positive integer.
         :param stateful: True or False, indicating whether your network are suposedto work statefully or not, respectively.
-        :param is_classifier: If True, the 'y' output data is transformed into +1 or -1, according to 'threshold' selected by user. Useful for non quantitative prediction (classification, not regression).
+        :param is_classifier: If True, the 'y' output data is transformed into +1 or 0, according to 'threshold' selected by user. Useful for non quantitative prediction (classification, not regression).
         :param threshold: Threshold for 'is_classifier' parameter. Float in the interval of your observed data 'data_y'.
         :return: X input and y observed data, formatted according to the given function parameters.
         """
         self.n_splits = n_splits
         self.training_percent = training_percent
-        self.sampling_windows_size = sampling_windows_size
+        self.sampling_window_size = sampling_window_size
         self.n_steps_prediction = n_steps_prediction
         self.stateful = stateful
         self.is_classifier = is_classifier
@@ -143,6 +143,6 @@ Generate indices to split data into training and test set.
         # iguais para todos os splits (blocking).
         # https://hub.packtpub.com/cross-validation-strategies-for-time-series-forecasting-tutorial/
         if self.blocking_split is False:
-            return accumulate_list, test_list
+            return zip(accumulate_list, test_list)
         else:
-            return train_list, test_list
+            return zip(train_list, test_list)
