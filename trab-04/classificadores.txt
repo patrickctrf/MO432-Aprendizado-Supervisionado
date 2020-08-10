@@ -1,41 +1,51 @@
 
-Score acurácia GradientBoostingClassifier() : 0.6657718120805369
+Score acurácia GradientBoostingClassifier() : 0.6955645161290323
 W size: 11
-Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.8946308724832214
+Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.9008064516129032
 W size: 11
-Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.48724832214765107
+Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.5
 W size: 11
-Score acurácia LogisticRegression() : 0.5114093959731544
+Score acurácia LogisticRegression() : 0.5108870967741936
 W size: 11
-Score acurácia GradientBoostingClassifier() : 0.676510067114094
+Score acurácia SVC(C=0.2) : 0.5008064516129033
 W size: 11
-Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.8953020134228188
+Score acurácia GradientBoostingClassifier() : 0.6959677419354838
 W size: 11
-Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.5120805369127517
+Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.8991935483870968
 W size: 11
-Score acurácia LogisticRegression() : 0.5114093959731544
+Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.5120967741935483
 W size: 11
-Score acurácia GradientBoostingClassifier() : 0.6740740740740742
+Score acurácia LogisticRegression() : 0.5108870967741936
+W size: 11
+Score acurácia SVC(C=0.2) : 0.5008064516129033
+W size: 11
+Score acurácia GradientBoostingClassifier() : 0.7082828282828283
 W size: 17
-Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.8969696969696969
+Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.8977777777777778
 W size: 17
-Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.5171717171717172
+Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.5103030303030304
 W size: 17
-Score acurácia LogisticRegression() : 0.5171717171717172
+Score acurácia LogisticRegression() : 0.5309090909090909
 W size: 17
-Score acurácia GradientBoostingClassifier() : 0.6868686868686869
+Score acurácia SVC(C=0.2) : 0.5026262626262625
+W size: 17
+Score acurácia GradientBoostingClassifier() : 0.7131313131313132
 W size: 19
-Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.8915824915824917
+Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.8961616161616162
 W size: 19
-Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.5037037037037038
+Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.5252525252525253
 W size: 19
-Score acurácia LogisticRegression() : 0.5212121212121212
+Score acurácia LogisticRegression() : 0.5301010101010102
 W size: 19
-Score acurácia GradientBoostingClassifier() : 0.6828282828282828
+Score acurácia SVC(C=0.2) : 0.5022222222222222
+W size: 19
+Score acurácia GradientBoostingClassifier() : 0.7183838383838383
 W size: 18
-Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.8942760942760943
+Score acurácia RandomForestClassifier(max_features=5, n_estimators=1000) : 0.8997979797979798
 W size: 18
-Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.507070707070707
+Score acurácia MLPClassifier(hidden_layer_sizes=20) : 0.5094949494949494
 W size: 18
-Score acurácia LogisticRegression() : 0.5144781144781145
+Score acurácia LogisticRegression() : 0.5333333333333334
+W size: 18
+Score acurácia SVC(C=0.2) : 0.5034343434343435
 W size: 18
