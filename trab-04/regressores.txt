@@ -1,0 +1,31 @@
+
+Score RMSE GradientBoostingRegressor() : 0.0060697360835493645
+W size: 8
+Score RMSE RandomForestRegressor(max_features=5, n_estimators=1000) : 0.0033721947741376748
+W size: 8
+Score RMSE MLPRegressor(hidden_layer_sizes=20) : 0.03469706958948574
+W size: 8
+Score RMSE GradientBoostingRegressor() : 0.00610616609343224
+W size: 14
+Score RMSE RandomForestRegressor(max_features=5, n_estimators=1000) : 0.0034663065361259264
+W size: 14
+Score RMSE MLPRegressor(hidden_layer_sizes=20) : 0.030475685786632532
+W size: 14
+Score RMSE GradientBoostingRegressor() : 0.006080909768295642
+W size: 12
+Score RMSE RandomForestRegressor(max_features=5, n_estimators=1000) : 0.003420423026875177
+W size: 12
+Score RMSE MLPRegressor(hidden_layer_sizes=20) : 0.026934687809598633
+W size: 12
+Score RMSE GradientBoostingRegressor() : 0.006098453501366214
+W size: 16
+Score RMSE RandomForestRegressor(max_features=5, n_estimators=1000) : 0.003511730512587862
+W size: 16
+Score RMSE MLPRegressor(hidden_layer_sizes=20) : 0.025888555509410077
+W size: 16
+Score RMSE GradientBoostingRegressor() : 0.006099152068084248
+W size: 16
+Score RMSE RandomForestRegressor(max_features=5, n_estimators=1000) : 0.00352735968328617
+W size: 16
+Score RMSE MLPRegressor(hidden_layer_sizes=20) : 0.035483263593381734
+W size: 16

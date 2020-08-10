@@ -6,7 +6,7 @@ from pandas import read_csv
 from ptk.timeseries import time_series_split, TimeSeriesSplitCV
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor, GradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import make_scorer, mean_squared_error, mean_absolute_error
+from sklearn.metrics import make_scorer, mean_squared_error, mean_absolute_error, accuracy_score
 from sklearn.model_selection import cross_validate
 from sklearn.neural_network import MLPRegressor, MLPClassifier
 from sklearn.preprocessing import MinMaxScaler
@@ -68,69 +68,139 @@ if __name__ == '__main__':
     # train, test = splitter_object.split(X, y)
 
     # =========Cross-Validacao-dos-dados-em-diferentes-regresssor===============
+    #
+    # regressor_list = [GradientBoostingRegressor(),
+    #                   RandomForestRegressor(max_features=5, n_estimators=1000),
+    #                   MLPRegressor(hidden_layer_sizes=20)
+    #                   ]
+    #
+    # regressor_names = ["GradientBoostingRegressor()",
+    #                    "RandomForestRegressor(max_features=5, n_estimators=1000)",
+    #                    "MLPRegressor(hidden_layer_sizes=20)"
+    #                    ]
+    #
+    # w_list = uniform(6, 20, 5).astype("int32")
+    #
+    # with open("regressores.txt", "w") as log_file:
+    #
+    #     for w in w_list:
+    #         X, y = time_series_split(train_data_x.reshape(-1), train_data_y.reshape(-1), sampling_window_size=w, n_steps_prediction=1, is_classifier=False)
+    #         for regressor, name in zip(regressor_list, regressor_names):
+    #             splitter_cv = TimeSeriesSplitCV(sampling_window_size=10, n_splits=5,
+    #                                             training_percent=0.7,
+    #                                             blocking_split=False)
+    #             cv_results = \
+    #                 cross_validate(estimator=regressor, X=X, y=y,
+    #                                cv=splitter_cv, n_jobs=4,
+    #                                scoring={"MSE": make_scorer(mean_squared_error, greater_is_better=False),
+    #                                         "MAE": make_scorer(mean_absolute_error, greater_is_better=False)})
+    #
+    #             log_file.write("\nScore RMSE " + name + " : " + str(((-cv_results["test_MSE"]) ** (1 / 2)).mean()) + "\nW size: " + str(w))
+    #             print("\nScore RMSE " + name + " : " + str(((-cv_results["test_MSE"]) ** (1 / 2)).mean()) + "\nW size: " + str(w))
+    #
+    # # =========Cross-Validacao-dos-dados-em-diferentes-classificadores==========
+    #
+    # regressor_list = [GradientBoostingClassifier(),
+    #                   RandomForestClassifier(max_features=5, n_estimators=1000),
+    #                   MLPClassifier(hidden_layer_sizes=20),
+    #                   LogisticRegression()
+    #                   ]
+    #
+    # regressor_names = ["GradientBoostingClassifier()",
+    #                    "RandomForestClassifier(max_features=5, n_estimators=1000)",
+    #                    "MLPClassifier(hidden_layer_sizes=20)",
+    #                    "LogisticRegression()"
+    #                    ]
+    #
+    # w_list = uniform(8, 20, 5).astype("int32")
+    #
+    # with open("classificadores.txt", "w") as log_file:
+    #
+    #     for w in w_list:
+    #         X, y = time_series_split(data_x=train_data_x.reshape(-1),
+    #                                  data_y=hstack((ones((1,)), true_divide(train_data_y[1:].reshape(-1), train_data_y[:-1].reshape(-1)))),
+    #                                  sampling_window_size=w,
+    #                                  n_steps_prediction=1,
+    #                                  is_classifier=True,
+    #                                  threshold=1)
+    #         for regressor, name in zip(regressor_list, regressor_names):
+    #             splitter_cv = TimeSeriesSplitCV(sampling_window_size=10, n_splits=5,
+    #                                             training_percent=0.7,
+    #                                             blocking_split=False)
+    #             cv_results = \
+    #                 cross_validate(estimator=regressor, X=X, y=y,
+    #                                cv=splitter_cv, n_jobs=4,
+    #                                scoring={"ACC": "accuracy"})
+    #
+    #             log_file.write("\nScore acurácia " + name + " : " + str((cv_results["test_ACC"]).mean()) + "\nW size: " + str(w))
+    #             print("\nScore acurácia " + name + " : " + str((cv_results["test_ACC"]).mean()) + "\nW size: " + str(w))
 
-    regressor_list = [GradientBoostingRegressor(),
-                      RandomForestRegressor(max_features=5, n_estimators=1000),
-                      MLPRegressor(hidden_layer_sizes=20)
-                      ]
+    # =========Melhores-Estimadores-Agora-No-Conjunto-de_Medida=================
 
-    regressor_names = ["GradientBoostingRegressor()",
-                       "RandomForestRegressor(max_features=5, n_estimators=1000)",
-                       "MLPRegressor(hidden_layer_sizes=20)"
-                       ]
+    # Regressao
+    X, y = time_series_split(train_data_x.reshape(-1), train_data_y.reshape(-1), sampling_window_size=8, n_steps_prediction=1, is_classifier=False)
+    regressor = RandomForestRegressor(max_features=5, n_estimators=1000)
+    regressor.fit(X, y)
 
-    w_list = uniform(6, 20, 5).astype("int32")
+    X, y = time_series_split(validation_data_x.reshape(-1), validation_data_y.reshape(-1), sampling_window_size=8, n_steps_prediction=1, is_classifier=False)
+    yhat = regressor.predict(X)
 
-    with open("regressores.txt", "w") as log_file:
+    print("RMSE do random forest no conjunto medida: ", mean_squared_error(yhat, y) ** 0.5)
 
-        for w in w_list:
-            X, y = time_series_split(train_data_x.reshape(-1), train_data_y.reshape(-1), sampling_window_size=w, n_steps_prediction=1, is_classifier=False)
-            for regressor, name in zip(regressor_list, regressor_names):
-                splitter_cv = TimeSeriesSplitCV(sampling_window_size=10, n_splits=5,
-                                                training_percent=0.7,
-                                                blocking_split=False)
-                cv_results = \
-                    cross_validate(estimator=regressor, X=X, y=y,
-                                   cv=splitter_cv, n_jobs=4,
-                                   scoring={"MSE": make_scorer(mean_squared_error, greater_is_better=False),
-                                            "MAE": make_scorer(mean_absolute_error, greater_is_better=False)})
+    # Classificacao
+    X, y = time_series_split(data_x=train_data_x.reshape(-1),
+                             data_y=hstack((ones((1,)), true_divide(train_data_y[1:].reshape(-1), train_data_y[:-1].reshape(-1)))),
+                             sampling_window_size=17,
+                             n_steps_prediction=1,
+                             is_classifier=True,
+                             threshold=1)
 
-                log_file.write("\nScore RMSE " + name + " : " + str(((-cv_results["test_MSE"]) ** (1 / 2)).mean()) + "\nW size: " + str(w))
-                print("\nScore RMSE " + name + " : " + str(((-cv_results["test_MSE"]) ** (1 / 2)).mean()) + "\nW size: " + str(w))
+    classificador = RandomForestClassifier(max_features=5, n_estimators=1000)
+    classificador.fit(X, y)
 
-    # =========Cross-Validacao-dos-dados-em-diferentes-classificadores==========
+    X, y = time_series_split(data_x=validation_data_x.reshape(-1),
+                             data_y=hstack((ones((1,)), true_divide(validation_data_y[1:].reshape(-1), validation_data_y[:-1].reshape(-1)))),
+                             sampling_window_size=17,
+                             n_steps_prediction=1,
+                             is_classifier=True,
+                             threshold=1)
+    yhat = classificador.predict(X)
 
-    regressor_list = [GradientBoostingClassifier(),
-                      RandomForestClassifier(max_features=5, n_estimators=1000),
-                      MLPClassifier(hidden_layer_sizes=20),
-                      LogisticRegression()
-                      ]
+    print("Acurácia do random forest no conjunto medida: ", accuracy_score(yhat, y))
 
-    regressor_names = ["GradientBoostingClassifier()",
-                       "RandomForestClassifier(max_features=5, n_estimators=1000)",
-                       "MLPClassifier(hidden_layer_sizes=20)",
-                       "LogisticRegression()"
-                       ]
-
-    w_list = uniform(8, 20, 5).astype("int32")
-
-    with open("classificadores.txt", "w") as log_file:
-
-        for w in w_list:
-            X, y = time_series_split(data_x=train_data_x.reshape(-1),
-                                     data_y=hstack((ones((1,)), true_divide(train_data_y[1:].reshape(-1), train_data_y[:-1].reshape(-1)))),
-                                     sampling_window_size=w,
-                                     n_steps_prediction=1,
-                                     is_classifier=True,
-                                     threshold=1)
-            for regressor, name in zip(regressor_list, regressor_names):
-                splitter_cv = TimeSeriesSplitCV(sampling_window_size=10, n_splits=5,
-                                                training_percent=0.7,
-                                                blocking_split=False)
-                cv_results = \
-                    cross_validate(estimator=regressor, X=X, y=y,
-                                   cv=splitter_cv, n_jobs=4,
-                                   scoring={"ACC": "accuracy"})
-
-                log_file.write("\nScore acurácia " + name + " : " + str((cv_results["test_ACC"]).mean()) + "\nW size: " + str(w))
-                print("\nScore acurácia " + name + " : " + str((cv_results["test_ACC"]).mean()) + "\nW size: " + str(w))
+    # X, y = time_series_split(data_x=train_data_x.reshape(-1),
+    #                          data_y=hstack((ones((1,)), true_divide(train_data_y[1:].reshape(-1), train_data_y[:-1].reshape(-1)))),
+    #                          sampling_window_size=17,
+    #                          n_steps_prediction=1,
+    #                          is_classifier=True,
+    #                          threshold=1)
+    #
+    # splitter_cv = TimeSeriesSplitCV(sampling_window_size=17, n_splits=5,
+    #                                 training_percent=0.7,
+    #                                 blocking_split=False)
+    # cv_results = \
+    #     cross_validate(estimator=RandomForestClassifier(max_features=5, n_estimators=1000), X=X, y=y,
+    #                    cv=splitter_cv, n_jobs=4, return_estimator=True,
+    #                    scoring={"ACC": "accuracy"})
+    #
+    # print(cv_results)
+    #
+    # # Classificacao
+    # X, y = time_series_split(data_x=train_data_x.reshape(-1),
+    #                          data_y=hstack((ones((1,)), true_divide(train_data_y[1:].reshape(-1), train_data_y[:-1].reshape(-1)))),
+    #                          sampling_window_size=17,
+    #                          n_steps_prediction=1,
+    #                          is_classifier=True,
+    #                          threshold=1)
+    #
+    # classificador = cv_results["estimator"][-1]
+    #
+    # X, y = time_series_split(data_x=validation_data_x.reshape(-1),
+    #                          data_y=hstack((ones((1,)), true_divide(validation_data_y[1:].reshape(-1), validation_data_y[:-1].reshape(-1)))),
+    #                          sampling_window_size=17,
+    #                          n_steps_prediction=1,
+    #                          is_classifier=True,
+    #                          threshold=1)
+    # yhat = classificador.predict(X)
+    #
+    # print("Acurácia do random forest no conjunto medida: ", accuracy_score(yhat, y))
